@@ -1,0 +1,32 @@
+package TableElements;
+
+public class Student {
+    private int studentId;
+    private String name;
+    private String surname;
+    private int groupId;
+
+    public Student(int studentId, String name, String surname, int groupId) {
+        this.studentId = studentId;
+        this.name = name;
+        this.surname = surname;
+        this.groupId = groupId;
+    }
+
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+}
