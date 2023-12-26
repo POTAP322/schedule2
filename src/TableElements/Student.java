@@ -1,6 +1,8 @@
 package TableElements;
 
-public class Student {
+import Utils.CsvUtils;
+
+public class Student implements TableData{
     private int studentId;
     private String name;
     private String surname;
@@ -29,4 +31,8 @@ public class Student {
         return groupId;
     }
 
+    @Override
+    public String connectInLine() {
+        return CsvUtils.connectInLine(studentId,name,surname,groupId);
+    }
 }

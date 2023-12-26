@@ -1,49 +1,59 @@
 package TableElements;
 
-public class Lesson {
-    private int lessonId;
-    private String subjectName;
-    private int teacherId;
 
-    private int educationYear;
+import Utils.CsvUtils;
 
+public class Lesson implements TableData{
 
+    private int groupId;
+    private int subjectId;
+    private String dayOfWeek;
+    private String time;
 
-    public Lesson(int subjectId, String subjectName, int teacherId, int educationYear) {
-        this.lessonId = subjectId;
-        this.subjectName = subjectName;
-        this.teacherId = teacherId;
-        this.educationYear = educationYear;
+    public Lesson(int groupId, int lessonId, String dayOfWeek, String time) {
+        this.groupId = groupId;
+        this.subjectId = lessonId;
+        this.dayOfWeek = dayOfWeek;
+        this.time = time;
     }
 
-    public int getLessonId() {
-        return lessonId;
+    public String getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
+
+    public int getSubjectId() {
+        return subjectId;
     }
 
     public void setSubjectId(int subjectId) {
-        this.lessonId = subjectId;
+        this.subjectId = subjectId;
     }
 
-    public String getSubjectName() {
-        return subjectName;
-    }
-
-    public void setSubjectName(String subjectName) {
-        this.subjectName = subjectName;
-    }
-
-    public int getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
-    }
-    public int getEducationYear() {
-        return educationYear;
-    }
-
-    public void setEducationYear(int educationYear) {
-        this.educationYear = educationYear;
+    @Override
+    public String connectInLine() {
+        return CsvUtils.connectInLine(groupId, subjectId,dayOfWeek,time);
     }
 }
+
+
+

@@ -12,22 +12,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class LessonTable implements Table,Iterable<Lesson>{
+public class LessonTable implements Table,Iterable<Lesson> {
+
     private List<Lesson> lessons;
     public static final String name = "LessonTable";
 
     public LessonTable() {
-        lessons= new ArrayList<>();
+        lessons = new ArrayList<>();
     }
 
 
     @Override
-    public void save(){
-
+    public void save() {
         try {
-            FileOutputStream fileOut = new FileOutputStream("src/Data/lessons.csv");
-            for(Lesson lesson:lessons ) {
-                String data = CsvUtils.connectInLine(lesson.getLessonId(),lesson.getSubjectName(),lesson.getTeacherId(),lesson.getEducationYear());
+            FileOutputStream fileOut = new FileOutputStream("Data/lesson.csv");
+            for(Lesson lesson : lessons) {
+                String data = CsvUtils.connectInLine(lesson.getGroupId(), lesson.getSubjectId(), lesson.getDayOfWeek(), lesson.getTime());
                 fileOut.write(data.getBytes());
             }
             fileOut.close();
@@ -36,20 +36,21 @@ public class LessonTable implements Table,Iterable<Lesson>{
         }
     }
 
+
     @Override
     public void load() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("src/Data/lessons.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader("Data/lesson.csv"));
             String line = reader.readLine();
             while (line != null) {
                 String [] strings = line.split(",");
 
-                int subjectId = Integer.parseInt(strings[0]);
-                String subjectName = strings[1];
-                int teacherId = Integer.parseInt(strings[2]);
-                int educationYear = Integer.parseInt(strings[3]);
+                int groupId = Integer.parseInt(strings[0]);
+                int lessonId = Integer.parseInt(strings[1]);
+                String dayOfWeek = strings[2];
+                String time = strings[3];
 
-                lessons.add(new Lesson(subjectId,subjectName,teacherId,educationYear));
+                lessons.add(new Lesson(groupId,lessonId,dayOfWeek,time));
                 line = reader.readLine();
 
             }
@@ -58,15 +59,16 @@ public class LessonTable implements Table,Iterable<Lesson>{
             e.printStackTrace();
 
         }
+
     }
 
     @Override
     public void add(String... params) {
-        int subjectId = Integer.parseInt(params[0]);
-        String subjectName = params[1];
-        int teacherId = Integer.parseInt(params[2]);
-        int educationYear = Integer.parseInt(params[3]);
-        lessons.add(new Lesson(subjectId,subjectName,teacherId,educationYear));
+        int groupId = Integer.parseInt(params[0]);
+        int lessonId = Integer.parseInt(params[1]);
+        String dayOfWeek = params[2];
+        String time = params[3];
+        lessons.add(new Lesson(groupId,lessonId,dayOfWeek,time));
 
     }
 
@@ -81,12 +83,12 @@ public class LessonTable implements Table,Iterable<Lesson>{
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<Lesson> iterator() {
         return lessons.iterator();
     }
 
     @Override
-    public void forEach(Consumer action) {
+    public void forEach(Consumer<? super Lesson> action) {
         Iterable.super.forEach(action);
     }
 }

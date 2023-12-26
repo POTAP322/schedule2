@@ -14,12 +14,10 @@ public class DataBase {
         tables.add(new CourseTable());
         tables.add(new StudentTable());
         tables.add(new TeacherTable());
+        tables.add(new SubjectTable());
         tables.add(new LessonTable());
-        tables.add(new GroupLessonTable());
 
     }
-
-
 
     public Table getTableByName(String name) {
         for (int i = 0; i < tables.size(); i++) {
@@ -90,36 +88,36 @@ public class DataBase {
         }
         return null;
     }
-    public List<Lesson> getLessonsByEducationYear(int educationYear){
-        LessonTable lessonTable = (LessonTable) getTableByName(LessonTable.name);
-        List<Lesson> lessons = new ArrayList<>();
-        for (Lesson lesson:lessonTable) {
-            if (lesson.getEducationYear() == educationYear){
-                lessons.add(lesson);
+    public List<Subject> getLessonsByEducationYear(int educationYear){
+        SubjectTable subjectTable = (SubjectTable) getTableByName(SubjectTable.name);
+        List<Subject> subjects = new ArrayList<>();
+        for (Subject subject : subjectTable) {
+            if (subject.getEducationYear() == educationYear){
+                subjects.add(subject);
             }
 
         }
-        return lessons;
+        return subjects;
     }
     public String getLessonNameByLessonId(int lessonId){
-        LessonTable lessonTable = (LessonTable) getTableByName(LessonTable.name);
-        for (Lesson lesson:lessonTable) {
-            if (lesson.getLessonId() == lessonId){
-                return lesson.getSubjectName();
+        SubjectTable subjectTable = (SubjectTable) getTableByName(SubjectTable.name);
+        for (Subject subject : subjectTable) {
+            if (subject.getLessonId() == lessonId){
+                return subject.getSubjectName();
             }
 
         }
         return null;
     }
-    public List<GroupLesson> getLessonsScheduleForGroupId(int groupId){
-        GroupLessonTable groupLessonTable = (GroupLessonTable) getTableByName(GroupLessonTable.name);
-        List<GroupLesson> groupLessons = new ArrayList<>();
-        for (GroupLesson groupLesson:groupLessonTable){
-            if (groupLesson.getGroupId()==groupId){
-                groupLessons.add(groupLesson);
+    public List<Lesson> getLessonsScheduleForGroupId(int groupId){
+        LessonTable groupSubjectTable = (LessonTable) getTableByName(LessonTable.name);
+        List<Lesson> lessons = new ArrayList<>();
+        for (Lesson lesson : groupSubjectTable){
+            if (lesson.getGroupId()==groupId){
+                lessons.add(lesson);
             }
         }
-        return groupLessons;
+        return lessons;
     }
 
     public String getTeacherNameByTeacherId(int teacherId){

@@ -43,7 +43,7 @@ public class Main {
         String fullString = "";
         for (int i = 0; i < dataBase.getLessonsScheduleForGroupId(groupId).size(); i++) {
 
-            String tmpString = dataBase.getLessonNameByLessonId(dataBase.getLessonsScheduleForGroupId(groupId).get(i).getLessonId()) + "," + dataBase.getTeacherNameByTeacherId(dataBase.getLessonsByEducationYear(educationYear).get(i).getTeacherId()) + ", "+dataBase.getLessonsScheduleForGroupId(groupId).get(i).getDayOfWeek() + ", " +dataBase.getLessonsScheduleForGroupId(groupId).get(i).getTime();
+            String tmpString = dataBase.getLessonNameByLessonId(dataBase.getLessonsScheduleForGroupId(groupId).get(i).getSubjectId()) + "," + dataBase.getTeacherNameByTeacherId(dataBase.getLessonsByEducationYear(educationYear).get(i).getTeacherId()) + ", "+dataBase.getLessonsScheduleForGroupId(groupId).get(i).getDayOfWeek() + ", " +dataBase.getLessonsScheduleForGroupId(groupId).get(i).getTime();
             fullString = fullString + "\n" + tmpString;
         }
         return fullString;

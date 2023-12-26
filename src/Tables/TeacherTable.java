@@ -26,7 +26,7 @@ public class TeacherTable implements Table,Iterable<Teacher>{
     public void save(){
 
         try {
-            FileOutputStream fileOut = new FileOutputStream("src/Data/teachers.csv");
+            FileOutputStream fileOut = new FileOutputStream("Data/teachers.csv");
             for(Teacher teacher:teachers ) {
                 String data = CsvUtils.connectInLine(teacher.getTeacherId(),teacher.getName(),teacher.getSurname());
                 fileOut.write(data.getBytes());
@@ -40,7 +40,7 @@ public class TeacherTable implements Table,Iterable<Teacher>{
     @Override
     public void load() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("src/Data/teachers.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader("Data/teachers.csv"));
             String line = reader.readLine();
             while (line != null) {
                 String [] strings = line.split(",");

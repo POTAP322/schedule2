@@ -22,7 +22,7 @@ public class CourseTable implements Table, Iterable<Course>{
     public void save(){
 
         try {
-            FileOutputStream fileOut = new FileOutputStream("src/Data/courses.csv");
+            FileOutputStream fileOut = new FileOutputStream("Data/courses.csv");
             for(Course course:courses ) {
                 String data = CsvUtils.connectInLine(course.getCourseId(),course.getEducationYear());
                 fileOut.write(data.getBytes());
@@ -36,7 +36,7 @@ public class CourseTable implements Table, Iterable<Course>{
     @Override
     public void load() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("src/Data/courses.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader("Data/courses.csv"));
             String line = reader.readLine();
             while (line != null) {
                 String [] strings = line.split(",");
@@ -56,9 +56,10 @@ public class CourseTable implements Table, Iterable<Course>{
     }
 
     @Override
-    public void add(String... params) {
+    public void add(String... params){
         int courseId = Integer.parseInt(params[0]);
         int educationYear = Integer.parseInt(params[1]);
+
         courses.add(new Course(courseId,educationYear));
 
     }

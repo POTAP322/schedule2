@@ -1,21 +1,26 @@
+
 package Tables;
 
 import TableElements.Group;
+import TableElements.TableData;
 import Utils.CsvUtils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class GroupTable implements Table,Iterable<Group>{
+public class ObjectTable<T extends TableData> implements Table,Iterable<T>{
+    private List<T> objects;
+    public String name;
 
-    private List<Group> groups;
-    public static final String name = "GroupTable";
-
-    public GroupTable() {
-        groups = new ArrayList<>();
+    public ObjectTable(String name) {
+        objects = new ArrayList<>();
+        this.name = name;
     }
 
 
@@ -24,8 +29,8 @@ public class GroupTable implements Table,Iterable<Group>{
 
         try {
             FileOutputStream fileOut = new FileOutputStream("Data/groups.csv");
-            for(Group group:groups ) {
-               String data = CsvUtils.connectInLine(group.getGroupId(),group.getGroupNumber(),group.getCourseId());
+            for(T object: objects) {
+                String data = object.connectInLine();
                 fileOut.write(data.getBytes());
             }
             fileOut.close();
@@ -42,11 +47,8 @@ public class GroupTable implements Table,Iterable<Group>{
             while (line != null) {
                 String [] strings = line.split(",");
 
-                int groupId = Integer.parseInt(strings[0]);
-                String groupNumber = strings[1];
-                int courseId = Integer.parseInt(strings[2]);
-
-                groups.add(new Group(groupId,groupNumber,courseId));
+                TableData creator = new ;
+                objects.add(new T());
                 line = reader.readLine();
 
             }
@@ -62,13 +64,13 @@ public class GroupTable implements Table,Iterable<Group>{
         int groupId = Integer.parseInt(params[0]);
         String groupNumber = params[1];
         int courseId = Integer.parseInt(params[2]);
-        groups.add(new Group(groupId,groupNumber,courseId));
+        objects.add(new Group(groupId,groupNumber,courseId));
 
     }
 
     @Override
     public int size() {
-        return groups.size();
+        return objects.size();
     }
 
     @Override
@@ -79,11 +81,12 @@ public class GroupTable implements Table,Iterable<Group>{
 
     @Override
     public Iterator<Group> iterator() {
-        return groups.iterator();
+        return objects.iterator();
     }
 
     @Override
     public void forEach(Consumer<? super Group> action) {
         Iterable.super.forEach(action);
     }
+
 }
