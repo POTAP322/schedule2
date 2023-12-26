@@ -10,7 +10,21 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\src\Data\groupLesson.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\src\Data\groups.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\src\Data\lessonTeacher.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

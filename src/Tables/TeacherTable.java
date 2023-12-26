@@ -9,9 +9,11 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 
-public class TeacherTable implements Table{
+public class TeacherTable implements Table,Iterable<Teacher>{
     private List<Teacher> teachers;
     public static final String name = "TeacherTable";
 
@@ -26,7 +28,7 @@ public class TeacherTable implements Table{
         try {
             FileOutputStream fileOut = new FileOutputStream("src/Data/teachers.csv");
             for(Teacher teacher:teachers ) {
-                String data = CsvUtils.connectInLine(teacher.getTeacherId(),teacher.getName(),teacher.getSurname(),teacher.getSurname());
+                String data = CsvUtils.connectInLine(teacher.getTeacherId(),teacher.getName(),teacher.getSurname());
                 fileOut.write(data.getBytes());
             }
             fileOut.close();
@@ -67,8 +69,24 @@ public class TeacherTable implements Table{
         teachers.add(new Teacher(teacherId,name,surname));
     }
 
+
+    @Override
+    public int size() {
+        return teachers.size();
+    }
+
     @Override
     public String getTableName() {
         return name;
+    }
+
+    @Override
+    public Iterator<Teacher> iterator() {
+        return teachers.iterator();
+    }
+
+    @Override
+    public void forEach(Consumer<? super Teacher> action) {
+        Iterable.super.forEach(action);
     }
 }

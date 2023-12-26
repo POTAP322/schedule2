@@ -80,6 +80,11 @@ public class StudentTable implements Table, Iterable<Student> {
     }
 
     @Override
+    public int size() {
+        return students.size();
+    }
+
+    @Override
     public String getTableName() {
         return name;
     }

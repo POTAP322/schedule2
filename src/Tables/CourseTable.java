@@ -64,6 +64,11 @@ public class CourseTable implements Table, Iterable<Course>{
     }
 
     @Override
+    public int size() {
+        return courses.size();
+    }
+
+    @Override
     public String getTableName() {
         return name;
     }

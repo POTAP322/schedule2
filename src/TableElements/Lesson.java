@@ -1,22 +1,27 @@
 package TableElements;
 
 public class Lesson {
-    private int subjectId;
+    private int lessonId;
     private String subjectName;
     private int teacherId;
 
-    public Lesson(int subjectId, String subjectName, int teacherId) {
-        this.subjectId = subjectId;
+    private int educationYear;
+
+
+
+    public Lesson(int subjectId, String subjectName, int teacherId, int educationYear) {
+        this.lessonId = subjectId;
         this.subjectName = subjectName;
         this.teacherId = teacherId;
+        this.educationYear = educationYear;
     }
 
-    public int getSubjectId() {
-        return subjectId;
+    public int getLessonId() {
+        return lessonId;
     }
 
     public void setSubjectId(int subjectId) {
-        this.subjectId = subjectId;
+        this.lessonId = subjectId;
     }
 
     public String getSubjectName() {
@@ -33,5 +38,12 @@ public class Lesson {
 
     public void setTeacherId(int teacherId) {
         this.teacherId = teacherId;
+    }
+    public int getEducationYear() {
+        return educationYear;
+    }
+
+    public void setEducationYear(int educationYear) {
+        this.educationYear = educationYear;
     }
 }
