@@ -65,6 +65,11 @@ public class CourseTable implements Table, Iterable<Course>{
     }
 
     @Override
+    public void remove() {
+
+    }
+
+    @Override
     public int size() {
         return courses.size();
     }

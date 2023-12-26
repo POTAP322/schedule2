@@ -67,6 +67,11 @@ public class GroupTable implements Table,Iterable<Group>{
     }
 
     @Override
+    public void remove() {
+
+    }
+
+    @Override
     public int size() {
         return groups.size();
     }

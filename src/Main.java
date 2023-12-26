@@ -1,12 +1,13 @@
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
        DataBase dataBase = new DataBase();
 
         dataBase.loadAll();
         //махинации проводим тута
-//        String w = "4";
-//        String l="4";
-//        dataBase.getTableByName("CourseTable").add(w,l);
+        String w = "3";
+        String l="2";
+
+        dataBase.getTableByName("StudentTable").add(w,"Даниил","Папонов",l);
 
         for (int i = 0; i < dataBase.getStudentsByGroupId(2).size(); i++) {
             System.out.println(dataBase.getStudentsByGroupId(2).get(i).getSurname());

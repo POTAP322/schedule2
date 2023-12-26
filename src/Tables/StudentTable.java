@@ -4,10 +4,7 @@ import TableElements.Group;
 import TableElements.Student;
 import Utils.CsvUtils;
 
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,9 +17,10 @@ public class StudentTable implements Table, Iterable<Student> {
     public StudentTable() {
         students = new ArrayList<>();
     }
-    public Student getByStudentId(int studentId){
-        for (Student student:students) {
-            if(student.getStudentId()==studentId){
+
+    public Student getByStudentId(int studentId) {
+        for (Student student : students) {
+            if (student.getStudentId() == studentId) {
                 return student;
             }
         }
@@ -58,7 +56,7 @@ public class StudentTable implements Table, Iterable<Student> {
                 String surname = strings[2];
                 int groupId = Integer.parseInt(strings[3]);
 
-                students.add(new Student(studentId,name,surname,groupId));
+                students.add(new Student(studentId, name, surname, groupId));
                 line = reader.readLine();
 
             }
@@ -70,12 +68,30 @@ public class StudentTable implements Table, Iterable<Student> {
     }
 
     @Override
-    public void add(String... params) {
+    public void add(String... params) throws Exception {
         int studentId = Integer.parseInt(params[0]);
         String name = params[1];
         String surname = params[2];
         int groupId = Integer.parseInt(params[3]);
-        students.add(new Student(studentId,name,surname,groupId));
+
+        //проверка на существование студента
+        File inputFile = new File("Data/students.csv");
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        String lineToCheck = studentId + "," + name + "," +surname + "," + groupId;
+        String currentLine;
+        while ((currentLine = reader.readLine()) != null) {
+            String treimmedLine = currentLine.trim();
+            if (treimmedLine.contains(lineToCheck)) {
+                throw new Exception("The student already exists");
+            }
+        }
+
+        students.add(new Student(studentId, name, surname, groupId));
+
+    }
+
+    @Override
+    public void remove() {
 
     }
 

@@ -3,7 +3,7 @@ package TableElements;
 
 import Utils.CsvUtils;
 
-public class Lesson implements TableData{
+public class Lesson{
 
     private int groupId;
     private int subjectId;
@@ -49,10 +49,6 @@ public class Lesson implements TableData{
         this.subjectId = subjectId;
     }
 
-    @Override
-    public String connectInLine() {
-        return CsvUtils.connectInLine(groupId, subjectId,dayOfWeek,time);
-    }
 }
 
 

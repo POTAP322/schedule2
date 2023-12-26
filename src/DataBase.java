@@ -110,9 +110,9 @@ public class DataBase {
         return null;
     }
     public List<Lesson> getLessonsScheduleForGroupId(int groupId){
-        LessonTable groupSubjectTable = (LessonTable) getTableByName(LessonTable.name);
+        LessonTable lessonTable = (LessonTable) getTableByName(LessonTable.name);
         List<Lesson> lessons = new ArrayList<>();
-        for (Lesson lesson : groupSubjectTable){
+        for (Lesson lesson : lessonTable){
             if (lesson.getGroupId()==groupId){
                 lessons.add(lesson);
             }

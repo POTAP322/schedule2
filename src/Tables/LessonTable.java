@@ -25,7 +25,7 @@ public class LessonTable implements Table,Iterable<Lesson> {
     @Override
     public void save() {
         try {
-            FileOutputStream fileOut = new FileOutputStream("Data/lesson.csv");
+            FileOutputStream fileOut = new FileOutputStream("Data/lessons.csv");
             for(Lesson lesson : lessons) {
                 String data = CsvUtils.connectInLine(lesson.getGroupId(), lesson.getSubjectId(), lesson.getDayOfWeek(), lesson.getTime());
                 fileOut.write(data.getBytes());
@@ -40,7 +40,7 @@ public class LessonTable implements Table,Iterable<Lesson> {
     @Override
     public void load() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("Data/lesson.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader("Data/lessons.csv"));
             String line = reader.readLine();
             while (line != null) {
                 String [] strings = line.split(",");
@@ -69,6 +69,11 @@ public class LessonTable implements Table,Iterable<Lesson> {
         String dayOfWeek = params[2];
         String time = params[3];
         lessons.add(new Lesson(groupId,lessonId,dayOfWeek,time));
+
+    }
+
+    @Override
+    public void remove() {
 
     }
 

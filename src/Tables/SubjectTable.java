@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 
 public class SubjectTable implements Table,Iterable<Subject>{
     private List<Subject> subjects;
-    public static final String name = "LessonTable";
+    public static final String name = "SubjectTable";
 
     public SubjectTable() {
         subjects = new ArrayList<>();
@@ -67,6 +67,11 @@ public class SubjectTable implements Table,Iterable<Subject>{
         int teacherId = Integer.parseInt(params[2]);
         int educationYear = Integer.parseInt(params[3]);
         subjects.add(new Subject(subjectId,subjectName,teacherId,educationYear));
+
+    }
+
+    @Override
+    public void remove() {
 
     }
 

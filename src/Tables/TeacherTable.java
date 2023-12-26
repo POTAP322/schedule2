@@ -69,6 +69,11 @@ public class TeacherTable implements Table,Iterable<Teacher>{
         teachers.add(new Teacher(teacherId,name,surname));
     }
 
+    @Override
+    public void remove() {
+
+    }
+
 
     @Override
     public int size() {

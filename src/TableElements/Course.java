@@ -2,7 +2,7 @@ package TableElements;
 
 import Utils.CsvUtils;
 
-public class Course implements TableData{
+public class Course{
     private int courseId;
     private int educationYear;
 
@@ -27,9 +27,6 @@ public class Course implements TableData{
         this.educationYear = educationYear;
     }
 
-    @Override
-    public String connectInLine() {
-        return CsvUtils.connectInLine(courseId,educationYear);
-    }
+
 }
 
