@@ -88,15 +88,21 @@ public class StudentTable implements Table, Iterable<Student> {
                 throw new Exception("The student already exists");
             }
         }
+
         students.add(new Student(newStudentId, name, surname, groupId));
 
     }
 
-    @Override
-    public void remove(String... params) {
-        //типо пользователь вводит сколько сможет параметров и мы ищем строку по ним
 
-        File inputFile = new File("Data/students.csv");
+    public void removeByFullName(String name, String surname){
+        Iterator<Student> iterator = students.iterator();
+        while (iterator.hasNext()) {
+            Student student = iterator.next();
+            if (student.getName() + student.getSurname() == name + surname) {
+                iterator.remove();
+                break;
+            }
+        }
 
     }
     @Override

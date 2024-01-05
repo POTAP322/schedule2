@@ -1,13 +1,12 @@
 package Tables;
 
 import TableElements.Course;
+import TableElements.Student;
 import TableElements.Teacher;
 import Utils.CsvUtils;
+import Utils.TableUtils;
 
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -62,21 +61,41 @@ public class TeacherTable implements Table,Iterable<Teacher>{
     }
 
     @Override
-    public void add(String... params) {
-        int teacherId = Integer.parseInt(params[0]);
-        String name = params[1];
-        String surname = params[2];
-        teachers.add(new Teacher(teacherId,name,surname));
+    public void add(String... params) throws Exception {
+        int newTeacherId = TableUtils.generateNewId(teachers, teacher -> teacher.getTeacherId());
+        String name = params[0];
+        String surname = params[1];
+
+        //проверка на существование преподавателя
+        File inputFile = new File("Data/teachers.csv");
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        String lineToCheck = name + "," +surname;
+        String currentLine;
+        while ((currentLine = reader.readLine()) != null) {
+            String treimmedLine = currentLine.trim();
+            if (treimmedLine.contains(lineToCheck)) {
+                throw new Exception("The teacher already exists");
+            }
+        }
+
+        teachers.add(new Teacher(newTeacherId,name,surname));
     }
 
-    @Override
+
     public void remove(String... params) {
 
     }
 
     @Override
     public void removeById(int id) {
-
+        Iterator<Teacher> iterator = teachers.iterator();
+        while (iterator.hasNext()) {
+            Teacher teacher = iterator.next();
+            if (teacher.getTeacherId() == id) {
+                iterator.remove();
+                break;
+            }
+        }
     }
 
 

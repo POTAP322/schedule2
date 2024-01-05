@@ -1,12 +1,11 @@
 package Tables;
 
+import TableElements.Student;
 import TableElements.Subject;
 import Utils.CsvUtils;
+import Utils.TableUtils;
 
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -27,7 +26,7 @@ public class SubjectTable implements Table,Iterable<Subject>{
         try {
             FileOutputStream fileOut = new FileOutputStream("Data/subject.csv");
             for(Subject subject : subjects) {
-                String data = CsvUtils.connectInLine(subject.getLessonId(), subject.getSubjectName(), subject.getTeacherId(), subject.getEducationYear());
+                String data = CsvUtils.connectInLine(subject.getSubjectId(), subject.getSubjectName(), subject.getTeacherId(), subject.getEducationYear());
                 fileOut.write(data.getBytes());
             }
             fileOut.close();
@@ -61,22 +60,43 @@ public class SubjectTable implements Table,Iterable<Subject>{
     }
 
     @Override
-    public void add(String... params) {
-        int subjectId = Integer.parseInt(params[0]);
-        String subjectName = params[1];
-        int teacherId = Integer.parseInt(params[2]);
-        int educationYear = Integer.parseInt(params[3]);
-        subjects.add(new Subject(subjectId,subjectName,teacherId,educationYear));
+    public void add(String... params) throws Exception{
+        int newSubjectId = TableUtils.generateNewId(subjects, subject -> subject.getSubjectId());
+        String subjectName = params[0];
+        int teacherId = Integer.parseInt(params[1]);
+        int educationYear = Integer.parseInt(params[2]);
+
+        //проверка на существование предмета
+        File inputFile = new File("Data/subject.csv");
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        String lineToCheck = subjectName + "," +teacherId + "," + educationYear;
+        String currentLine;
+        while ((currentLine = reader.readLine()) != null) {
+            String treimmedLine = currentLine.trim();
+            if (treimmedLine.contains(lineToCheck)) {
+                throw new Exception("The subject already exists");
+            }
+        }
+
+        subjects.add(new Subject(newSubjectId,subjectName,teacherId,educationYear));
 
     }
 
-    @Override
+
     public void remove(String... params) {
 
     }
 
     @Override
     public void removeById(int id) {
+        Iterator<Subject> iterator = subjects.iterator();
+        while (iterator.hasNext()) {
+            Subject subject = iterator.next();
+            if (subject.getSubjectId() == id) {
+                iterator.remove();
+                break;
+            }
+        }
 
     }
 

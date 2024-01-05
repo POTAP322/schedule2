@@ -102,7 +102,7 @@ public class DataBase {
     public String getLessonNameByLessonId(int lessonId){
         SubjectTable subjectTable = (SubjectTable) getTableByName(SubjectTable.name);
         for (Subject subject : subjectTable) {
-            if (subject.getLessonId() == lessonId){
+            if (subject.getSubjectId() == lessonId){
                 return subject.getSubjectName();
             }
 

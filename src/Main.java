@@ -1,4 +1,6 @@
+import Tables.StudentTable.*;
 public class Main {
+
     public static void main(String[] args) throws Exception {
        DataBase dataBase = new DataBase();
 
@@ -6,7 +8,7 @@ public class Main {
         //махинации проводим тута
 
         //dataBase.getTableByName("StudentTable").add("Романчик","Романов","4");
-        dataBase.getTableByName("StudentTable").removeById(5);
+        //dataBase.getTableByName("StudentTable").removeById(5);
 
         for (int i = 0; i < dataBase.getStudentsByGroupId(1).size(); i++) {
             System.out.println(dataBase.getStudentsByGroupId(1).get(i).getSurname());

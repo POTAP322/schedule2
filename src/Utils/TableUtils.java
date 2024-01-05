@@ -9,17 +9,17 @@ public class TableUtils {
 
     //для поиска свободного id в списке
     public static <T> int generateNewId(List<T> items, Function<T, Integer> idExtractor) { //вторым полем принимает лямбда выражение, которое например принимает студента и возвращает его studentId: student -> student.getStudentId()
-        List<Integer> ids = new ArrayList<>();
+        List<Integer> indexes = new ArrayList<>();
         for (T item : items) {
-            ids.add(idExtractor.apply(item));
+            indexes.add(idExtractor.apply(item));
         }
-        Collections.sort(ids);
-        for (int i = 0; i < ids.size(); i++) {
-            if (i + 1 != ids.get(i)) {
+        Collections.sort(indexes);
+        for (int i = 0; i < indexes.size(); i++) {
+            if (i + 1 != indexes.get(i)) {
                 return i + 1;
             }
         }
-        return ids.size() + 1;
+        return indexes.size() + 1;
     }
 
 }

@@ -1,9 +1,7 @@
 package TableElements;
 
-import Utils.CsvUtils;
-
 public class Subject{
-    private int lessonId;
+    private int subjectId;
     private String subjectName;
     private int teacherId;
 
@@ -12,18 +10,18 @@ public class Subject{
 
 
     public Subject(int subjectId, String subjectName, int teacherId, int educationYear) {
-        this.lessonId = subjectId;
+        this.subjectId = subjectId;
         this.subjectName = subjectName;
         this.teacherId = teacherId;
         this.educationYear = educationYear;
     }
 
-    public int getLessonId() {
-        return lessonId;
+    public int getSubjectId() {
+        return subjectId;
     }
 
     public void setSubjectId(int subjectId) {
-        this.lessonId = subjectId;
+        this.subjectId = subjectId;
     }
 
     public String getSubjectName() {

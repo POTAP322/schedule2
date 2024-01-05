@@ -1,6 +1,7 @@
 package Tables;
 
 import TableElements.Lesson;
+import TableElements.Student;
 import Utils.CsvUtils;
 
 import java.io.BufferedReader;
@@ -72,13 +73,21 @@ public class LessonTable implements Table,Iterable<Lesson> {
 
     }
 
-    @Override
+
     public void remove(String... params) {
 
     }
 
     @Override
-    public void removeById(int id) {
+    public void removeById(int subjectId) {
+        Iterator<Lesson> iterator = lessons.iterator();
+        while (iterator.hasNext()) {
+            Lesson lesson = iterator.next();
+            if (lesson.getSubjectId() == subjectId ) {
+                iterator.remove();
+                break;
+            }
+        }
 
     }
 

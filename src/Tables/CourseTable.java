@@ -1,7 +1,9 @@
 package Tables;
 import TableElements.Course;
 import TableElements.Group;
+import TableElements.Student;
 import Utils.CsvUtils;
+import Utils.TableUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -56,21 +58,39 @@ public class CourseTable implements Table, Iterable<Course>{
     }
 
     @Override
-    public void add(String... params){
-        int courseId = Integer.parseInt(params[0]);
-        int educationYear = Integer.parseInt(params[1]);
+    public void add(String... params) throws  Exception{
+        int newCourseId = TableUtils.generateNewId(courses, Course::getCourseId);
+        int educationYear = Integer.parseInt(params[0]);
 
-        courses.add(new Course(courseId,educationYear));
+        File inputFile = new File("Data/courses.csv");
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        String lineToCheck = educationYear+"";
+        String currentLine;
+        while ((currentLine = reader.readLine()) != null) {
+            String treimmedLine = currentLine.trim();
+            if (treimmedLine.contains(lineToCheck)) {
+                throw new Exception("The course already exists");
+            }
+        }
 
+        courses.add(new Course(newCourseId,educationYear));
     }
 
-    @Override
+
     public void remove(String... params) {
 
     }
 
     @Override
     public void removeById(int id) {
+        Iterator<Course> iterator = courses.iterator();
+        while (iterator.hasNext()) {
+            Course course = iterator.next();
+            if (course.getCourseId() == id) {
+                iterator.remove();
+                break;
+            }
+        }
 
     }
 
