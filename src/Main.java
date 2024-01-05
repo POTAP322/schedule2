@@ -4,14 +4,12 @@ public class Main {
 
         dataBase.loadAll();
         //махинации проводим тута
-        String w = "3";
-        String l="2";
 
-        dataBase.getTableByName("StudentTable").add(w,"Даниил","Папонов",l);
+        //dataBase.getTableByName("StudentTable").add("Романчик","Романов","4");
+        dataBase.getTableByName("StudentTable").removeById(5);
 
-        for (int i = 0; i < dataBase.getStudentsByGroupId(2).size(); i++) {
-            System.out.println(dataBase.getStudentsByGroupId(2).get(i).getSurname());
-
+        for (int i = 0; i < dataBase.getStudentsByGroupId(1).size(); i++) {
+            System.out.println(dataBase.getStudentsByGroupId(1).get(i).getSurname());
 
         }
         //System.out.println(dataBase.getCourseIdByGroupId(2));
@@ -26,7 +24,6 @@ public class Main {
         }
         System.out.println(dataBase.getTableByName("LessonTable").size());
 
-
         //System.out.println(dataBase.getLessonsScheduleForGroupId(2).get(0).getDayOfWeek());
 
         //System.out.println(dataBase.getLessonByLessonId(1));
@@ -39,7 +36,6 @@ public class Main {
     }
     private static String getScheduleForGroup(DataBase dataBase, int groupId){
         int educationYear = dataBase.getCourseYearByCourseId(dataBase.getCourseIdByGroupId(groupId));
-
 
         String fullString = "";
         for (int i = 0; i < dataBase.getLessonsScheduleForGroupId(groupId).size(); i++) {

@@ -65,7 +65,12 @@ public class CourseTable implements Table, Iterable<Course>{
     }
 
     @Override
-    public void remove() {
+    public void remove(String... params) {
+
+    }
+
+    @Override
+    public void removeById(int id) {
 
     }
 

@@ -73,7 +73,12 @@ public class LessonTable implements Table,Iterable<Lesson> {
     }
 
     @Override
-    public void remove() {
+    public void remove(String... params) {
+
+    }
+
+    @Override
+    public void removeById(int id) {
 
     }
 

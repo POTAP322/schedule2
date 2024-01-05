@@ -71,7 +71,12 @@ public class SubjectTable implements Table,Iterable<Subject>{
     }
 
     @Override
-    public void remove() {
+    public void remove(String... params) {
+
+    }
+
+    @Override
+    public void removeById(int id) {
 
     }
 

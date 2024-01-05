@@ -3,9 +3,11 @@ package Tables;
 import TableElements.Group;
 import TableElements.Student;
 import Utils.CsvUtils;
+import Utils.TableUtils;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
@@ -69,15 +71,16 @@ public class StudentTable implements Table, Iterable<Student> {
 
     @Override
     public void add(String... params) throws Exception {
-        int studentId = Integer.parseInt(params[0]);
-        String name = params[1];
-        String surname = params[2];
-        int groupId = Integer.parseInt(params[3]);
+        int newStudentId = TableUtils.generateNewId(students, student -> student.getStudentId()); //принимает студента и возвращает его studentId вторым полем
+        String name = params[0];
+        String surname = params[1];
+        int groupId = Integer.parseInt(params[2]);
+
 
         //проверка на существование студента
         File inputFile = new File("Data/students.csv");
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-        String lineToCheck = studentId + "," + name + "," +surname + "," + groupId;
+        String lineToCheck = name + "," +surname + "," + groupId;
         String currentLine;
         while ((currentLine = reader.readLine()) != null) {
             String treimmedLine = currentLine.trim();
@@ -85,15 +88,30 @@ public class StudentTable implements Table, Iterable<Student> {
                 throw new Exception("The student already exists");
             }
         }
-
-        students.add(new Student(studentId, name, surname, groupId));
+        students.add(new Student(newStudentId, name, surname, groupId));
 
     }
 
     @Override
-    public void remove() {
+    public void remove(String... params) {
+        //типо пользователь вводит сколько сможет параметров и мы ищем строку по ним
+
+        File inputFile = new File("Data/students.csv");
 
     }
+    @Override
+    public void removeById(int studentId){
+        Iterator<Student> iterator = students.iterator();
+        while (iterator.hasNext()) {
+            Student student = iterator.next();
+            if (student.getStudentId() == studentId) {
+                iterator.remove();
+                break;
+            }
+        }
+    }
+
+
 
     @Override
     public int size() {

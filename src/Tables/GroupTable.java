@@ -67,7 +67,12 @@ public class GroupTable implements Table,Iterable<Group>{
     }
 
     @Override
-    public void remove() {
+    public void remove(String... params ) {
+
+    }
+
+    @Override
+    public void removeById(int id) {
 
     }
 
