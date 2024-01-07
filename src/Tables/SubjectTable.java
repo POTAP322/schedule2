@@ -83,6 +83,7 @@ public class SubjectTable implements Table,Iterable<Subject>{
     }
 
 
+
     public void remove(String... params) {
 
     }

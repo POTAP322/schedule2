@@ -16,17 +16,18 @@ public class DataBase {
         tables.add(new TeacherTable());
         tables.add(new SubjectTable());
         tables.add(new LessonTable());
-
     }
 
     public Table getTableByName(String name) {
         for (int i = 0; i < tables.size(); i++) {
             if (Objects.equals(tables.get(i).getTableName(), name)) {
                 return tables.get(i);
+
             }
         }
         return null;
     }
+
 
 
 

@@ -1,7 +1,9 @@
 package Tables;
 
+import TableElements.Group;
 import TableElements.Lesson;
 import TableElements.Student;
+import TableElements.Subject;
 import Utils.CsvUtils;
 
 import java.io.BufferedReader;
@@ -13,7 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class LessonTable implements Table,Iterable<Lesson> {
+public class LessonTable implements Table,lessonInterface,Iterable<Lesson> {
 
     private List<Lesson> lessons;
     public static final String name = "LessonTable";
@@ -66,11 +68,28 @@ public class LessonTable implements Table,Iterable<Lesson> {
     @Override
     public void add(String... params) {
         int groupId = Integer.parseInt(params[0]);
-        int lessonId = Integer.parseInt(params[1]);
+        int subjectId = Integer.parseInt(params[1]);
         String dayOfWeek = params[2];
         String time = params[3];
-        lessons.add(new Lesson(groupId,lessonId,dayOfWeek,time));
+        lessons.add(new Lesson(groupId,subjectId,dayOfWeek,time));
+    }
 
+
+
+    @Override
+    public void addNewByGroupAndCourse(Group group, Subject subject, Lesson.LessonDay day, Lesson.LessonTime time){
+        int groupId = group.getGroupId();
+        int subjectId = subject.getSubjectId();
+        String dayOfWeek = String.valueOf(day);
+        String lessonTime = time.getTime();
+        lessons.add(new Lesson(groupId,subjectId,dayOfWeek,lessonTime));
+    }
+
+    @Override
+    public void addNew(int groupId, int subjectId, Lesson.LessonDay day, Lesson.LessonTime time) {
+        String dayOfWeek = String.valueOf(day);
+        String lessonTime = time.getTime();
+        lessons.add(new Lesson(groupId,subjectId,dayOfWeek,lessonTime));
     }
 
 

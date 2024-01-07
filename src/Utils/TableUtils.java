@@ -16,10 +16,10 @@ public class TableUtils {
         Collections.sort(indexes);
         for (int i = 0; i < indexes.size(); i++) {
             if (i + 1 != indexes.get(i)) {
-                return i + 1;
+                return i + 1; //если нашли пустой промежуточный
             }
         }
-        return indexes.size() + 1;
+        return indexes.size() + 1; //если свободных промежуточных нету
     }
 
 }

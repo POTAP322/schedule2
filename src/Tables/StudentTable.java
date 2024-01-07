@@ -71,7 +71,7 @@ public class StudentTable implements Table, Iterable<Student> {
 
     @Override
     public void add(String... params) throws Exception {
-        int newStudentId = TableUtils.generateNewId(students, student -> student.getStudentId()); //принимает студента и возвращает его studentId вторым полем
+        int newStudentId = TableUtils.generateNewId(students, student -> student.getStudentId());
         String name = params[0];
         String surname = params[1];
         int groupId = Integer.parseInt(params[2]);

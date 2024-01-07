@@ -1,4 +1,6 @@
-import Tables.StudentTable.*;
+import TableElements.Lesson;
+import Tables.lessonInterface;
+
 public class Main {
 
     public static void main(String[] args) throws Exception {
@@ -9,6 +11,8 @@ public class Main {
 
         //dataBase.getTableByName("StudentTable").add("Романчик","Романов","4");
         //dataBase.getTableByName("StudentTable").removeById(5);
+        //dataBase.getTableByName("LessonTable").addNew;
+        ((lessonInterface) dataBase.getTableByName("StudentTable")).addNew(1,2, Lesson.LessonDay.Friday, Lesson.LessonTime.firstLesson);
 
         for (int i = 0; i < dataBase.getStudentsByGroupId(1).size(); i++) {
             System.out.println(dataBase.getStudentsByGroupId(1).get(i).getSurname());

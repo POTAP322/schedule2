@@ -7,6 +7,7 @@ public interface Table {
     void save();
     void load();
     void add(String... params) throws Exception;
+
     void removeById(int id);
 
 
