@@ -5,6 +5,10 @@ import Utils.CsvUtils;
 
 
 public class Lesson{
+    public enum TypeOfWeek{
+        firstType,
+        secondType
+    }
     public enum LessonDay{
         Monday,
         Tuesday ,
@@ -38,14 +42,24 @@ public class Lesson{
 
     private int groupId;
     private int subjectId;
+    private String typeOfWeek;
     private String dayOfWeek;
     private String time;
 
-    public Lesson(int groupId, int lessonId, String dayOfWeek, String time) {
+    public Lesson(int groupId, int lessonId,String typeOfWeek, String dayOfWeek, String time) {
         this.groupId = groupId;
         this.subjectId = lessonId;
+        this.typeOfWeek = typeOfWeek;
         this.dayOfWeek = dayOfWeek;
         this.time = time;
+    }
+
+    public String getTypeOfWeek() {
+        return typeOfWeek;
+    }
+
+    public void setTypeOfWeek(String typeOfWeek) {
+        this.typeOfWeek = typeOfWeek;
     }
 
     public int getGroupId() {

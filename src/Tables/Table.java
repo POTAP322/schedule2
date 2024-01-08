@@ -1,5 +1,7 @@
 package Tables;
 
+import TableElements.Lesson;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -15,4 +17,5 @@ public interface Table {
     String getTableName();
 
 
+    void addNew(int groupId, int subjectId,Lesson.TypeOfWeek typeOfWeek, Lesson.LessonDay day, Lesson.LessonTime firstLesson);
 }

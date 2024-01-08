@@ -1,6 +1,7 @@
 package Tables;
 
 import TableElements.Group;
+import TableElements.Lesson;
 import TableElements.Student;
 import Utils.CsvUtils;
 import Utils.TableUtils;
@@ -107,6 +108,11 @@ public class GroupTable implements Table,Iterable<Group>{
     @Override
     public String getTableName() {
         return name;
+    }
+
+    @Override
+    public void addNew(int i, int i1, Lesson.TypeOfWeek typeOfWeek, Lesson.LessonDay day, Lesson.LessonTime firstLesson) {
+
     }
 
 

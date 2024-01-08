@@ -1,6 +1,7 @@
 package Tables;
 
 import TableElements.Course;
+import TableElements.Lesson;
 import TableElements.Student;
 import TableElements.Teacher;
 import Utils.CsvUtils;
@@ -108,6 +109,12 @@ public class TeacherTable implements Table,Iterable<Teacher>{
     public String getTableName() {
         return name;
     }
+
+    @Override
+    public void addNew(int groupId, int subjectId, Lesson.TypeOfWeek typeOfWeek, Lesson.LessonDay day, Lesson.LessonTime firstLesson) {
+
+    }
+
 
     @Override
     public Iterator<Teacher> iterator() {

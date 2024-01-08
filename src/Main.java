@@ -1,5 +1,4 @@
 import TableElements.Lesson;
-import Tables.lessonInterface;
 
 public class Main {
 
@@ -9,10 +8,11 @@ public class Main {
         dataBase.loadAll();
         //махинации проводим тута
 
-        //dataBase.getTableByName("StudentTable").add("Романчик","Романов","4");
+        //dataBase.getTableByName("StudentTable").add("Романчиииик","Романоооов","4");
         //dataBase.getTableByName("StudentTable").removeById(5);
         //dataBase.getTableByName("LessonTable").addNew;
-        ((lessonInterface) dataBase.getTableByName("StudentTable")).addNew(1,2, Lesson.LessonDay.Friday, Lesson.LessonTime.firstLesson);
+        dataBase.getTableByName("LessonTable").addNew(5,5,Lesson.TypeOfWeek.secondType, Lesson.LessonDay.Friday, Lesson.LessonTime.firstLesson);
+        //dataBase.getTableByName("LessonTable").add("1","3","fsfsd","8:34");
 
         for (int i = 0; i < dataBase.getStudentsByGroupId(1).size(); i++) {
             System.out.println(dataBase.getStudentsByGroupId(1).get(i).getSurname());
