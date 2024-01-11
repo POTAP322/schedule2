@@ -17,5 +17,5 @@ public interface Table {
     String getTableName();
 
 
-    void addNew(int groupId, int subjectId,Lesson.TypeOfWeek typeOfWeek, Lesson.LessonDay day, Lesson.LessonTime firstLesson);
+    void addNew(int groupId, int subjectId,Lesson.TypeOfWeek typeOfWeek, Lesson.LessonDay day, Lesson.LessonTime firstLesson) throws Exception;
 }

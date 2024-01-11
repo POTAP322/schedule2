@@ -40,18 +40,28 @@ public class Lesson{
     }
 
 
+    private int lessonId;
     private int groupId;
     private int subjectId;
     private String typeOfWeek;
     private String dayOfWeek;
     private String time;
 
-    public Lesson(int groupId, int lessonId,String typeOfWeek, String dayOfWeek, String time) {
+    public Lesson(int lessonId,int groupId, int subjectId,String typeOfWeek, String dayOfWeek, String time) {
+        this.lessonId = lessonId;
         this.groupId = groupId;
-        this.subjectId = lessonId;
+        this.subjectId = subjectId;
         this.typeOfWeek = typeOfWeek;
         this.dayOfWeek = dayOfWeek;
         this.time = time;
+    }
+
+    public int getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(int lessonId) {
+        this.lessonId = lessonId;
     }
 
     public String getTypeOfWeek() {

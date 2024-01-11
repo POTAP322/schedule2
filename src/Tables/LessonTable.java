@@ -5,11 +5,9 @@ import TableElements.Lesson;
 import TableElements.Student;
 import TableElements.Subject;
 import Utils.CsvUtils;
+import Utils.TableUtils;
 
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -30,7 +28,7 @@ public class LessonTable implements Table,Iterable<Lesson> {
         try {
             FileOutputStream fileOut = new FileOutputStream("Data/lessons.csv");
             for(Lesson lesson : lessons) {
-                String data = CsvUtils.connectInLine(lesson.getGroupId(), lesson.getSubjectId(),lesson.getTypeOfWeek(), lesson.getDayOfWeek(), lesson.getTime());
+                String data = CsvUtils.connectInLine(lesson.getLessonId(),lesson.getGroupId(), lesson.getSubjectId(),lesson.getTypeOfWeek(), lesson.getDayOfWeek(), lesson.getTime());
                 fileOut.write(data.getBytes());
             }
             fileOut.close();
@@ -48,13 +46,14 @@ public class LessonTable implements Table,Iterable<Lesson> {
             while (line != null) {
                 String [] strings = line.split(",");
 
-                int groupId = Integer.parseInt(strings[0]);
-                int lessonId = Integer.parseInt(strings[1]);
-                String typeOfWeek = strings[2];
-                String dayOfWeek = strings[3];
-                String time = strings[4];
+                int lessonId = Integer.parseInt(strings[0]);
+                int groupId = Integer.parseInt(strings[1]);
+                int subjectId = Integer.parseInt(strings[2]);
+                String typeOfWeek = strings[3];
+                String dayOfWeek = strings[4];
+                String time = strings[5];
 
-                lessons.add(new Lesson(groupId,lessonId,typeOfWeek,dayOfWeek,time));
+                lessons.add(new Lesson(lessonId,groupId,subjectId,typeOfWeek,dayOfWeek,time));
                 line = reader.readLine();
 
             }
@@ -68,30 +67,45 @@ public class LessonTable implements Table,Iterable<Lesson> {
 
     @Override
     public void add(String... params) {
-        int groupId = Integer.parseInt(params[0]);
-        int subjectId = Integer.parseInt(params[1]);
-        String typeOfWeek = params[2];
-        String dayOfWeek = params[3];
-        String time = params[4];
-        lessons.add(new Lesson(groupId,subjectId,typeOfWeek,dayOfWeek,time));
+        int newLessonId = TableUtils.generateNewId(lessons, lesson -> lesson.getLessonId());
+        int groupId = Integer.parseInt(params[1]);
+        int subjectId = Integer.parseInt(params[2]);
+        String typeOfWeek = params[3];
+        String dayOfWeek = params[4];
+        String time = params[5];
+        lessons.add(new Lesson(newLessonId,groupId,subjectId,typeOfWeek,dayOfWeek,time));
     }
 
 
     public void addNewByGroupAndCourse(Group group, Subject subject,Lesson.TypeOfWeek typeOfWeek, Lesson.LessonDay day, Lesson.LessonTime time){
+        int newLessonId = TableUtils.generateNewId(lessons, lesson -> lesson.getLessonId());
         int groupId = group.getGroupId();
         int subjectId = subject.getSubjectId();
         String weekType = String.valueOf(typeOfWeek);
         String dayOfWeek = String.valueOf(day);
         String lessonTime = time.getTime();
-        lessons.add(new Lesson(groupId,subjectId,weekType,dayOfWeek,lessonTime));
+        lessons.add(new Lesson(newLessonId,groupId,subjectId,weekType,dayOfWeek,lessonTime));
     }
 
 
-    public void addNew(int groupId, int subjectId,Lesson.TypeOfWeek typeOfWeek, Lesson.LessonDay day, Lesson.LessonTime time) {
+    public void addNew(int groupId, int subjectId,Lesson.TypeOfWeek typeOfWeek, Lesson.LessonDay day, Lesson.LessonTime time) throws Exception {
+        int newLessonId = TableUtils.generateNewId(lessons, lesson -> lesson.getLessonId());
         String weekType = String.valueOf(typeOfWeek);
         String dayOfWeek = String.valueOf(day);
         String lessonTime = time.getTime();
-        lessons.add(new Lesson(groupId,subjectId,weekType,dayOfWeek,lessonTime));
+
+        //проверка на то, что в данное время у группы есть другой урок
+        File inputFile = new File("Data/lessons.csv");
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        String currentLine;
+        while ((currentLine = reader.readLine()) != null) {
+            String[] parts = currentLine.split(",");
+            if (parts[1].equals(String.valueOf(groupId)) && parts[3].equals(weekType) && parts[4].equals(dayOfWeek) && parts[5].equals(lessonTime)) {
+                throw new Exception("В это время у группы есть другой урок");
+            }
+        }
+
+        lessons.add(new Lesson(newLessonId,groupId,subjectId,weekType,dayOfWeek,lessonTime));
     }
 
 
@@ -100,11 +114,11 @@ public class LessonTable implements Table,Iterable<Lesson> {
     }
 
     @Override
-    public void removeById(int subjectId) {
+    public void removeById(int lessonId) {
         Iterator<Lesson> iterator = lessons.iterator();
         while (iterator.hasNext()) {
             Lesson lesson = iterator.next();
-            if (lesson.getSubjectId() == subjectId ) {
+            if (lesson.getLessonId() == lessonId ) {
                 iterator.remove();
                 break;
             }
