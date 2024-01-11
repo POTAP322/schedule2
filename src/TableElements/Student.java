@@ -1,6 +1,8 @@
 package TableElements;
 
-public class Student {
+import Utils.CsvUtils;
+
+public class Student{
     private int studentId;
     private String name;
     private String surname;
@@ -28,5 +30,6 @@ public class Student {
     public int getGroupId() {
         return groupId;
     }
+
 
 }

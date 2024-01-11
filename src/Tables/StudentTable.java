@@ -1,14 +1,14 @@
 package Tables;
 
 import TableElements.Group;
+import TableElements.Lesson;
 import TableElements.Student;
 import Utils.CsvUtils;
+import Utils.TableUtils;
 
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
@@ -20,9 +20,10 @@ public class StudentTable implements Table, Iterable<Student> {
     public StudentTable() {
         students = new ArrayList<>();
     }
-    public Student getByStudentId(int studentId){
-        for (Student student:students) {
-            if(student.getStudentId()==studentId){
+
+    public Student getByStudentId(int studentId) {
+        for (Student student : students) {
+            if (student.getStudentId() == studentId) {
                 return student;
             }
         }
@@ -34,7 +35,7 @@ public class StudentTable implements Table, Iterable<Student> {
     public void save() {
 
         try {
-            FileOutputStream fileOut = new FileOutputStream("src/Data/students.csv");
+            FileOutputStream fileOut = new FileOutputStream("Data/students.csv");
             for (Student student : students) {
                 String data = CsvUtils.connectInLine(student.getStudentId(), student.getName(), student.getSurname(), student.getGroupId());
                 fileOut.write(data.getBytes());
@@ -48,7 +49,7 @@ public class StudentTable implements Table, Iterable<Student> {
     @Override
     public void load() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("src/Data/students.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader("Data/students.csv"));
             String line = reader.readLine();
             while (line != null) {
                 String[] strings = line.split(",");
@@ -58,7 +59,7 @@ public class StudentTable implements Table, Iterable<Student> {
                 String surname = strings[2];
                 int groupId = Integer.parseInt(strings[3]);
 
-                students.add(new Student(studentId,name,surname,groupId));
+                students.add(new Student(studentId, name, surname, groupId));
                 line = reader.readLine();
 
             }
@@ -70,18 +71,68 @@ public class StudentTable implements Table, Iterable<Student> {
     }
 
     @Override
-    public void add(String... params) {
-        int studentId = Integer.parseInt(params[0]);
-        String name = params[1];
-        String surname = params[2];
-        int groupId = Integer.parseInt(params[3]);
-        students.add(new Student(studentId,name,surname,groupId));
+    public void add(String... params) throws Exception {
+        int newStudentId = TableUtils.generateNewId(students, student -> student.getStudentId());
+        String name = params[0];
+        String surname = params[1];
+        int groupId = Integer.parseInt(params[2]);
 
+
+        //проверка на существование студента
+        File inputFile = new File("Data/students.csv");
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        String lineToCheck = name + "," +surname + "," + groupId;
+        String currentLine;
+        while ((currentLine = reader.readLine()) != null) {
+            String treimmedLine = currentLine.trim();
+            if (treimmedLine.contains(lineToCheck)) {
+                throw new Exception("The student already exists");
+            }
+        }
+
+        students.add(new Student(newStudentId, name, surname, groupId));
+
+    }
+
+
+    public void removeByFullName(String name, String surname){
+        Iterator<Student> iterator = students.iterator();
+        while (iterator.hasNext()) {
+            Student student = iterator.next();
+            if (student.getName() + student.getSurname() == name + surname) {
+                iterator.remove();
+                break;
+            }
+        }
+
+    }
+    @Override
+    public void removeById(int studentId){
+        Iterator<Student> iterator = students.iterator();
+        while (iterator.hasNext()) {
+            Student student = iterator.next();
+            if (student.getStudentId() == studentId) {
+                iterator.remove();
+                break;
+            }
+        }
+    }
+
+
+
+    @Override
+    public int size() {
+        return students.size();
     }
 
     @Override
     public String getTableName() {
         return name;
+    }
+
+    @Override
+    public void addNew(int i, int i1, Lesson.TypeOfWeek typeOfWeek, Lesson.LessonDay day, Lesson.LessonTime firstLesson) {
+
     }
 
     @Override

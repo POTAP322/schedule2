@@ -1,7 +1,4 @@
-import TableElements.Course;
-import TableElements.Group;
-import TableElements.Lesson;
-import TableElements.Student;
+import TableElements.*;
 import Tables.*;
 
 import java.util.ArrayList;
@@ -17,18 +14,22 @@ public class DataBase {
         tables.add(new CourseTable());
         tables.add(new StudentTable());
         tables.add(new TeacherTable());
+        tables.add(new SubjectTable());
         tables.add(new LessonTable());
-
     }
 
     public Table getTableByName(String name) {
         for (int i = 0; i < tables.size(); i++) {
             if (Objects.equals(tables.get(i).getTableName(), name)) {
                 return tables.get(i);
+
             }
         }
         return null;
     }
+
+
+
 
     public void saveAll() { //все таблицы сохраняем
         for (Table table : tables) {
@@ -42,6 +43,34 @@ public class DataBase {
         }
 
     }
+
+    public List<Group> getGroups(){
+        GroupTable groupTable = (GroupTable) getTableByName(GroupTable.name);
+        List<Group> groups = new ArrayList<>();
+        for (Group group:groupTable){
+            groups.add(group);
+        }
+        return groups;
+    }
+    public List<Student> getStudents(){
+        StudentTable studentTable = (StudentTable) getTableByName(StudentTable.name);
+        List<Student> students = new ArrayList<>();
+        for(Student student: studentTable){
+            students.add(student);
+
+        }
+        return students;
+    }
+    public List<Subject> getSubjects(){
+        SubjectTable subjectTable = (SubjectTable) getTableByName(SubjectTable.name);
+        List<Subject> subjects = new ArrayList<>();
+        for(Subject subject: subjectTable){
+            subjects.add(subject);
+
+        }
+        return subjects;
+
+    }
     public List<Student> getStudentsByGroupId(int groupId){
         StudentTable studentTable = (StudentTable) getTableByName(StudentTable.name);
         List<Student> students = new ArrayList<>();
@@ -53,6 +82,19 @@ public class DataBase {
 
         return students;
     }
+    public List<Lesson> getLessonsByGroupId(int groupId){
+        LessonTable lessonTable = (LessonTable) getTableByName(LessonTable.name);
+        List<Lesson> lessons = new ArrayList<>();
+        for (Lesson lesson:lessonTable) {
+            if (lesson.getGroupId() == groupId){
+                lessons.add(lesson);
+            }
+        }
+
+        return lessons;
+    }
+
+
     public List<Group> getGroupsByCourseId(int courseId){
         GroupTable groupTable = (GroupTable) getTableByName(GroupTable.name);
         List<Group> groups = new ArrayList<>();
@@ -63,6 +105,17 @@ public class DataBase {
         }
         return groups;
     }
+
+    public Group getGroupByGroupId(int groupId){
+        GroupTable groupTable = (GroupTable) getTableByName(GroupTable.name);
+        for (Group group:groupTable) {
+            if(group.getGroupId() == groupId){
+                return group;
+            }
+        }
+        return null;
+    }
+
     public Integer getCourseIdByGroupId(int groupId){
         GroupTable groupTable = (GroupTable) getTableByName(GroupTable.name);
         for (Group group:groupTable) {
@@ -73,6 +126,12 @@ public class DataBase {
         }
         return null;
     }
+//    public Integer getEducationYearByGroupId(int groupId){
+//        CourseTable courseTable = (CourseTable) getTableByName(CourseTable.name);
+//        for (Course course:courseTable){
+//            if (course.)
+//        }
+//    }
     public Integer getCourseYearByCourseId(int courseId){
         CourseTable courseTable = (CourseTable) getTableByName(CourseTable.name);
         for (Course course:courseTable) {
@@ -82,7 +141,46 @@ public class DataBase {
         }
         return null;
     }
-    public List<Lesson> getLessonsByGroupId(int groupId){
+    public List<Subject> getLessonsByEducationYear(int educationYear){
+        SubjectTable subjectTable = (SubjectTable) getTableByName(SubjectTable.name);
+        List<Subject> subjects = new ArrayList<>();
+        for (Subject subject : subjectTable) {
+            if (subject.getEducationYear() == educationYear){
+                subjects.add(subject);
+            }
 
+        }
+        return subjects;
     }
+    public String getSubjectNameBySubjectId(int subjectId){
+        SubjectTable subjectTable = (SubjectTable) getTableByName(SubjectTable.name);
+        for (Subject subject : subjectTable) {
+            if (subject.getSubjectId() == subjectId){
+                return subject.getSubjectName();
+            }
+
+        }
+        return null;
+    }
+    public List<Lesson> getLessonsScheduleForGroupId(int groupId){
+        LessonTable lessonTable = (LessonTable) getTableByName(LessonTable.name);
+        List<Lesson> lessons = new ArrayList<>();
+        for (Lesson lesson : lessonTable){
+            if (lesson.getGroupId()==groupId){
+                lessons.add(lesson);
+            }
+        }
+        return lessons;
+    }
+
+    public String getTeacherNameByTeacherId(int teacherId){
+        TeacherTable teacherTable = (TeacherTable) getTableByName(TeacherTable.name);
+        for (Teacher teacher:teacherTable){
+            if(teacher.getTeacherId()==teacherId){
+                return teacher.getName() + " " + teacher.getSurname();
+            }
+        }
+        return null;
+    }
+
 }

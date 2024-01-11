@@ -1,14 +1,83 @@
 package TableElements;
 
-public class Lesson {
-    private int subjectId;
-    private String subjectName;
-    private int teacherId;
 
-    public Lesson(int subjectId, String subjectName, int teacherId) {
+import Utils.CsvUtils;
+
+
+public class Lesson{
+    public enum TypeOfWeek{
+        firstType,
+        secondType
+    }
+    public enum LessonDay{
+        Monday,
+        Tuesday ,
+        Wednesday,
+        Thursday,
+        Friday,
+        Saturday,
+        Sunday
+    }
+    public enum LessonTime {
+        firstLesson("8:00"),
+        secondLesson("9:45"),
+        thirdLesson("11:30"),
+        fourthLesson("13:25"),
+        fifthLesson("15:10"),
+        sixthLesson("16:55"),
+        seventhLesson("18:40"),
+        ;
+
+        private final String time;
+
+        LessonTime(String time) {
+            this.time = time;
+        }
+
+        public String getTime() {
+            return time;
+        }
+    }
+
+
+    private int lessonId;
+    private int groupId;
+    private int subjectId;
+    private String typeOfWeek;
+    private String dayOfWeek;
+    private String time;
+
+    public Lesson(int lessonId,int groupId, int subjectId,String typeOfWeek, String dayOfWeek, String time) {
+        this.lessonId = lessonId;
+        this.groupId = groupId;
         this.subjectId = subjectId;
-        this.subjectName = subjectName;
-        this.teacherId = teacherId;
+        this.typeOfWeek = typeOfWeek;
+        this.dayOfWeek = dayOfWeek;
+        this.time = time;
+    }
+
+    public int getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(int lessonId) {
+        this.lessonId = lessonId;
+    }
+
+    public String getTypeOfWeek() {
+        return typeOfWeek;
+    }
+
+    public void setTypeOfWeek(String typeOfWeek) {
+        this.typeOfWeek = typeOfWeek;
+    }
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
     public int getSubjectId() {
@@ -19,19 +88,22 @@ public class Lesson {
         this.subjectId = subjectId;
     }
 
-    public String getSubjectName() {
-        return subjectName;
+    public String getDayOfWeek() {
+        return dayOfWeek;
     }
 
-    public void setSubjectName(String subjectName) {
-        this.subjectName = subjectName;
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
-    public int getTeacherId() {
-        return teacherId;
+    public String getTime() {
+        return time;
     }
 
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
+    public void setTime(String time) {
+        this.time = time;
     }
 }
+
+
+

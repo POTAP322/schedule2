@@ -1,6 +1,8 @@
 package TableElements;
 
-public class Course {
+import Utils.CsvUtils;
+
+public class Course{
     private int courseId;
     private int educationYear;
 
@@ -24,5 +26,7 @@ public class Course {
     public void setEducationYear(int educationYear) {
         this.educationYear = educationYear;
     }
+
+
 }
 
